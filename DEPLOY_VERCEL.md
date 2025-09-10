@@ -72,9 +72,9 @@ git push origin main
 **Framework Preset**: `Create React App`
 
 **Build Settings** (configuradas automaticamente via vercel.json):
+- **Install Command**: `cd frontend && npm install`
 - **Build Command**: `cd frontend && npm run build`
 - **Output Directory**: `frontend/build`
-- **Install Command**: `npm install` (automático)
 - **Python Dependencies**: `requirements.txt` na raiz do projeto
 
 ### 3.3 Variáveis de Ambiente
