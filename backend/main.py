@@ -7,7 +7,10 @@ from dotenv import load_dotenv
 
 from database import engine, get_db
 from models import Base
-from routers import auth, accounts, transactions
+from routers import (
+    auth, users, accounts, transactions, invoices, subscriptions, payments,
+    bank_import, debts, goals, reports, gamification, permissions, dashboard
+)
 
 load_dotenv()
 
@@ -52,8 +55,19 @@ app.add_middleware(
 
 # Incluir routers
 app.include_router(auth.router)
+app.include_router(users.router)
 app.include_router(accounts.router)
 app.include_router(transactions.router)
+app.include_router(invoices.router)
+app.include_router(subscriptions.router)
+app.include_router(payments.router)
+app.include_router(bank_import.router)
+app.include_router(debts.router)
+app.include_router(goals.router)
+app.include_router(reports.router)
+app.include_router(gamification.router)
+app.include_router(permissions.router)
+app.include_router(dashboard.router)
 
 # Rota de health check
 @app.get("/")
