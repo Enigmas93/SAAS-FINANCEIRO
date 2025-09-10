@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import LoadingSpinner from '../components/LoadingSpinner';
-import axios from 'axios';
 
 const Dashboard = () => {
   const { user } = useAuth();

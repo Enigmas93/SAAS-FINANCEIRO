@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
-import axios from 'axios';
 
 const Accounts = () => {
   const [accounts, setAccounts] = useState([]);

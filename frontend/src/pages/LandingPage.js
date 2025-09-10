@@ -278,25 +278,25 @@ const LandingPage = () => {
             <div>
               <h4 className="font-semibold mb-4">Produto</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Funcionalidades</a></li>
-                <li><a href="#" className="hover:text-white">Preços</a></li>
-                <li><a href="#" className="hover:text-white">Demo</a></li>
+                <li><button className="hover:text-white text-left">Funcionalidades</button></li>
+                <li><button className="hover:text-white text-left">Preços</button></li>
+                <li><button className="hover:text-white text-left">Demo</button></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Suporte</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Central de Ajuda</a></li>
-                <li><a href="#" className="hover:text-white">Contato</a></li>
-                <li><a href="#" className="hover:text-white">Status</a></li>
+                <li><button className="hover:text-white text-left">Central de Ajuda</button></li>
+                <li><button className="hover:text-white text-left">Contato</button></li>
+                <li><button className="hover:text-white text-left">Status</button></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Privacidade</a></li>
-                <li><a href="#" className="hover:text-white">Termos</a></li>
-                <li><a href="#" className="hover:text-white">Cookies</a></li>
+                <li><button className="hover:text-white text-left">Privacidade</button></li>
+                <li><button className="hover:text-white text-left">Termos</button></li>
+                <li><button className="hover:text-white text-left">Cookies</button></li>
               </ul>
             </div>
           </div>
