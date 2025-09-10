@@ -69,12 +69,12 @@ git push origin main
 
 ### 3.2 Configurações de Build
 
-**Framework Preset**: `Other`
+**Framework Preset**: `Create React App`
 
-**Build Settings**:
-- **Build Command**: `cd frontend && npm run vercel-build`
+**Build Settings** (configuradas automaticamente via vercel.json):
+- **Build Command**: `cd frontend && npm run build`
 - **Output Directory**: `frontend/build`
-- **Install Command**: `cd frontend && npm install`
+- **Install Command**: `npm install` (automático)
 
 ### 3.3 Variáveis de Ambiente
 
