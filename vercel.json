@@ -4,7 +4,7 @@
   "outputDirectory": "frontend/build",
   "functions": {
     "api/index.py": {
-      "runtime": "python3.9",
+      "runtime": "python@3.9",
       "excludeFiles": "{frontend,*.md,.git,.gitignore,docker-compose.yml,render.yaml,deploy*.ps1,backend/init.sql,**/__pycache__,**/*.pyc,**/.pytest_cache,**/tests,**/*.log,requirements.txt}/**"
     }
   },
