@@ -8,7 +8,7 @@ Guia completo para fazer deploy da aplicação SaaS de Controle Financeiro no Ve
 - [ ] Conta no [Neon](https://neon.tech) para banco PostgreSQL
 - [ ] Repositório Git (GitHub, GitLab ou Bitbucket)
 - [ ] Node.js 18+ instalado localmente
-- [ ] Python 3.11+ instalado localmente
+- [ ] Python 3.9+ instalado localmente
 
 ## 🗄️ 1. Configuração do Banco de Dados (Neon)
 
