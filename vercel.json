@@ -5,26 +5,7 @@
   "functions": {
     "api/index.py": {
       "runtime": "python3.9",
-      "includeFiles": [
-        "api/**",
-        "backend/**"
-      ],
-      "excludeFiles": [
-        "frontend/**",
-        "*.md",
-        ".git/**",
-        ".gitignore",
-        "docker-compose.yml",
-        "render.yaml",
-        "deploy*.ps1",
-        "backend/init.sql",
-        "**/__pycache__/**",
-        "**/*.pyc",
-        "**/.pytest_cache/**",
-        "**/tests/**",
-        "**/*.log",
-        "requirements.txt"
-      ]
+      "excludeFiles": "{frontend,*.md,.git,.gitignore,docker-compose.yml,render.yaml,deploy*.ps1,backend/init.sql,**/__pycache__,**/*.pyc,**/.pytest_cache,**/tests,**/*.log,requirements.txt}/**"
     }
   },
   "rewrites": [
