@@ -72,6 +72,7 @@ axios.interceptors.response.use(
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -84,12 +85,14 @@ export const AuthProvider = ({ children }) => {
           setUser(JSON.parse(userData));
           // Verify token is still valid
           await axios.get('/auth/me');
+          setIsAuthenticated(true);
         } catch (error) {
           // Token is invalid, clear storage
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
           localStorage.removeItem('user');
           setUser(null);
+          setIsAuthenticated(false);
         }
       }
       
@@ -102,17 +105,8 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post('/auth/login', {
-        username: email,
-        password: password
-      }, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        transformRequest: [(data) => {
-          return Object.keys(data)
-            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-            .join('&');
-        }]
+        email,
+        password
       });
 
       const { access_token, refresh_token, user: userData } = response.data;
@@ -122,33 +116,59 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(userData));
       
       setUser(userData);
+      setIsAuthenticated(true);
       
       return { success: true };
     } catch (error) {
+      let errorMessage = 'Erro ao fazer login';
+      
+      if (error.response?.data?.detail) {
+        if (Array.isArray(error.response.data.detail)) {
+          // Handle validation errors
+          const validationErrors = error.response.data.detail;
+          errorMessage = validationErrors.map(err => {
+            const field = err.loc?.[err.loc.length - 1] || 'campo';
+            return `${field}: ${err.msg}`;
+          }).join(', ');
+        } else {
+          errorMessage = error.response.data.detail;
+        }
+      }
+      
       return {
         success: false,
-        error: error.response?.data?.detail || 'Erro ao fazer login'
+        error: errorMessage
       };
     }
   };
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('/auth/register', userData);
+      await axios.post('/auth/register', userData);
       
-      const { access_token, refresh_token, user: newUser } = response.data;
+      // Registration successful, now login the user
+      const loginResult = await login(userData.email, userData.password);
       
-      localStorage.setItem('access_token', access_token);
-      localStorage.setItem('refresh_token', refresh_token);
-      localStorage.setItem('user', JSON.stringify(newUser));
-      
-      setUser(newUser);
-      
-      return { success: true };
+      return loginResult;
     } catch (error) {
+      let errorMessage = 'Erro ao criar conta';
+      
+      if (error.response?.data?.detail) {
+        if (Array.isArray(error.response.data.detail)) {
+          // Handle validation errors
+          const validationErrors = error.response.data.detail;
+          errorMessage = validationErrors.map(err => {
+            const field = err.loc?.[err.loc.length - 1] || 'campo';
+            return `${field}: ${err.msg}`;
+          }).join(', ');
+        } else {
+          errorMessage = error.response.data.detail;
+        }
+      }
+      
       return {
         success: false,
-        error: error.response?.data?.detail || 'Erro ao criar conta'
+        error: errorMessage
       };
     }
   };
@@ -163,6 +183,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
       setUser(null);
+      setIsAuthenticated(false);
     }
   };
 
@@ -173,6 +194,7 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
+    isAuthenticated,
     loading,
     login,
     register,

@@ -107,12 +107,8 @@ const RegisterPage = () => {
         full_name: formData.full_name,
         email: formData.email,
         password: formData.password,
-        company: {
-          name: formData.company_name,
-          document: formData.company_document,
-          phone: formData.company_phone,
-          address: formData.company_address
-        }
+        company_name: formData.company_name,
+        company_cnpj: formData.company_document
       };
       
       const result = await register(userData);

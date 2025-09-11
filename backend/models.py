@@ -222,7 +222,7 @@ class BankConnection(Base):
     account_number = Column(String(50), nullable=True)
     agency = Column(String(10), nullable=True)
     connection_token = Column(Text, nullable=True)  # Token criptografado
-    status = Column(SQLEnum(BankConnectionStatus), default=BankConnectionStatus.PENDING)
+    status = Column(Enum(BankConnectionStatus), default=BankConnectionStatus.PENDING)
     last_sync = Column(DateTime(timezone=True), nullable=True)
     sync_frequency = Column(Integer, default=24)  # horas
     auto_import = Column(Boolean, default=True)
@@ -259,7 +259,7 @@ class Debt(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(200), nullable=False)
     description = Column(Text, nullable=True)
-    debt_type = Column(SQLEnum(DebtType), nullable=False)
+    debt_type = Column(Enum(DebtType), nullable=False)
     total_amount = Column(Numeric(15, 2), nullable=False)
     remaining_amount = Column(Numeric(15, 2), nullable=False)
     interest_rate = Column(Numeric(5, 4), nullable=True)  # taxa de juros mensal
@@ -268,7 +268,7 @@ class Debt(Base):
     installment_amount = Column(Numeric(15, 2), nullable=True)
     due_day = Column(Integer, nullable=True)  # dia do vencimento
     next_due_date = Column(DateTime(timezone=True), nullable=True)
-    status = Column(SQLEnum(DebtStatus), default=DebtStatus.ACTIVE)
+    status = Column(Enum(DebtStatus), default=DebtStatus.ACTIVE)
     creditor = Column(String(200), nullable=True)
     company_id = Column(Integer, ForeignKey("companies.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
@@ -288,7 +288,7 @@ class FinancialGoal(Base):
     target_amount = Column(Numeric(15, 2), nullable=False)
     current_amount = Column(Numeric(15, 2), default=0)
     target_date = Column(DateTime(timezone=True), nullable=True)
-    status = Column(SQLEnum(GoalStatus), default=GoalStatus.ACTIVE)
+    status = Column(Enum(GoalStatus), default=GoalStatus.ACTIVE)
     category = Column(String(100), nullable=True)  # viagem, emergência, etc
     auto_transfer = Column(Boolean, default=False)
     monthly_target = Column(Numeric(15, 2), nullable=True)
@@ -309,11 +309,11 @@ class Alert(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(200), nullable=False)
     message = Column(Text, nullable=False)
-    alert_type = Column(SQLEnum(AlertType), nullable=False)
+    alert_type = Column(Enum(AlertType), nullable=False)
     is_read = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
     priority = Column(Integer, default=1)  # 1=baixa, 2=média, 3=alta
-    metadata = Column(JSON, nullable=True)  # dados específicos do alerta
+    alert_metadata = Column(JSON, nullable=True)  # dados específicos do alerta
     company_id = Column(Integer, ForeignKey("companies.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -328,14 +328,14 @@ class Achievement(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(200), nullable=False)
     description = Column(Text, nullable=False)
-    achievement_type = Column(SQLEnum(AchievementType), nullable=False)
+    achievement_type = Column(Enum(AchievementType), nullable=False)
     icon = Column(String(50), nullable=True)
     points = Column(Integer, default=0)
     is_unlocked = Column(Boolean, default=False)
     unlocked_at = Column(DateTime(timezone=True), nullable=True)
     progress_current = Column(Integer, default=0)
     progress_target = Column(Integer, nullable=False)
-    metadata = Column(JSON, nullable=True)
+    achievement_metadata = Column(JSON, nullable=True)
     company_id = Column(Integer, ForeignKey("companies.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

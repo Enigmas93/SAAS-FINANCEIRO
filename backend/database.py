@@ -10,21 +10,30 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
-    # Fallback para desenvolvimento local
-    DATABASE_URL = "postgresql://postgres:postgres123@localhost:5432/saas_financeiro"
+    # Fallback para desenvolvimento local com SQLite
+    DATABASE_URL = "sqlite:///./saas_financeiro.db"
 
-# Configurações otimizadas para Vercel/Neon
+# Configurações otimizadas
 engine_config = {
-    "pool_size": 5,
-    "max_overflow": 10,
-    "pool_pre_ping": True,
-    "pool_recycle": 300,
     "echo": os.getenv("DEBUG") == "true"
 }
 
-# Para Neon, adicionar configurações SSL
-if "neon.tech" in DATABASE_URL or os.getenv("ENVIRONMENT") == "production":
-    engine_config["connect_args"] = {"sslmode": "require"}
+# Para PostgreSQL/Neon, adicionar configurações específicas
+if DATABASE_URL.startswith("postgresql"):
+    engine_config.update({
+        "pool_size": 5,
+        "max_overflow": 10,
+        "pool_pre_ping": True,
+        "pool_recycle": 300
+    })
+    
+    # Para Neon, adicionar configurações SSL
+    if "neon.tech" in DATABASE_URL or os.getenv("ENVIRONMENT") == "production":
+        engine_config["connect_args"] = {"sslmode": "require"}
+
+# Para SQLite, adicionar configurações específicas
+if DATABASE_URL.startswith("sqlite"):
+    engine_config["connect_args"] = {"check_same_thread": False}
 
 engine = create_engine(DATABASE_URL, **engine_config)
 

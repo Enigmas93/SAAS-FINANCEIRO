@@ -98,7 +98,7 @@ const LoginPage = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             {errors.general && (
               <div className="bg-danger-50 border border-danger-200 text-danger-700 px-4 py-3 rounded">
-                {errors.general}
+                {typeof errors.general === 'string' ? errors.general : JSON.stringify(errors.general)}
               </div>
             )}
             

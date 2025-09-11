@@ -12,8 +12,8 @@ from models import (
     FinancialGoal, Debt, Alert, AlertType, TransactionType
 )
 from schemas_advanced import (
-    MonthlyReport, CategoryReport, AccountReport,
-    CashFlowReport, AlertCreate
+    DashboardStats, FinancialReport, CategorySpending,
+    MonthlyTrend, AlertCreate
 )
 from auth import get_current_active_user
 

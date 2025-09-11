@@ -23,17 +23,7 @@ ROLE_PERMISSIONS = {
         "goals": ["create", "read", "update", "delete"],
         "company": ["read", "update"]
     },
-    UserRole.MANAGER: {
-        "users": ["read"],
-        "accounts": ["create", "read", "update"],
-        "transactions": ["create", "read", "update", "delete"],
-        "reports": ["read", "export"],
-        "settings": ["read"],
-        "debts": ["create", "read", "update", "delete"],
-        "goals": ["create", "read", "update", "delete"],
-        "company": ["read"]
-    },
-    UserRole.EMPLOYEE: {
+    UserRole.USER: {
         "users": [],
         "accounts": ["read"],
         "transactions": ["create", "read"],
@@ -43,7 +33,7 @@ ROLE_PERMISSIONS = {
         "goals": ["create", "read", "update"],
         "company": []
     },
-    UserRole.VIEWER: {
+    UserRole.READONLY: {
         "users": [],
         "accounts": ["read"],
         "transactions": ["read"],
@@ -298,8 +288,6 @@ def get_available_roles(
     
     if current_user.role == UserRole.ADMIN:
         available_roles = list(UserRole)
-    elif current_user.role == UserRole.MANAGER:
-        available_roles = [UserRole.EMPLOYEE, UserRole.VIEWER]
     else:
         available_roles = []
     

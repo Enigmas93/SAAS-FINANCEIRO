@@ -12,7 +12,7 @@ from models import (
     BankConnectionStatus, Debt, DebtStatus, FinancialGoal, GoalStatus,
     Alert, AlertType
 )
-from schemas_advanced import DashboardSummary
+from schemas_advanced import DashboardStats
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 

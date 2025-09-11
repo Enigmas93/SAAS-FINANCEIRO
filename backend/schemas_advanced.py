@@ -79,7 +79,7 @@ class TransactionCategoryBase(BaseModel):
     name: str = Field(..., max_length=100)
     description: Optional[str] = None
     icon: Optional[str] = Field(None, max_length=50)
-    color: Optional[str] = Field(None, regex=r'^#[0-9A-Fa-f]{6}$')
+    color: Optional[str] = Field(None, pattern=r'^#[0-9A-Fa-f]{6}$')
     parent_id: Optional[int] = None
     ml_keywords: Optional[List[str]] = None
 
@@ -90,7 +90,7 @@ class TransactionCategoryUpdate(BaseModel):
     name: Optional[str] = Field(None, max_length=100)
     description: Optional[str] = None
     icon: Optional[str] = Field(None, max_length=50)
-    color: Optional[str] = Field(None, regex=r'^#[0-9A-Fa-f]{6}$')
+    color: Optional[str] = Field(None, pattern=r'^#[0-9A-Fa-f]{6}$')
     parent_id: Optional[int] = None
     ml_keywords: Optional[List[str]] = None
 
@@ -181,7 +181,7 @@ class AlertBase(BaseModel):
     message: str
     alert_type: AlertTypeSchema
     priority: int = Field(1, ge=1, le=3)
-    metadata: Optional[Dict[str, Any]] = None
+    alert_metadata: Optional[Dict[str, Any]] = None
 
 class AlertCreate(AlertBase):
     pass
@@ -209,7 +209,7 @@ class AchievementBase(BaseModel):
     icon: Optional[str] = Field(None, max_length=50)
     points: int = Field(0, ge=0)
     progress_target: int = Field(..., gt=0)
-    metadata: Optional[Dict[str, Any]] = None
+    achievement_metadata: Optional[Dict[str, Any]] = None
 
 class AchievementCreate(AchievementBase):
     pass
@@ -236,7 +236,7 @@ class BudgetBase(BaseModel):
     name: str = Field(..., max_length=200)
     category: str = Field(..., max_length=100)
     amount_limit: Decimal = Field(..., gt=0)
-    period_type: str = Field("monthly", regex=r'^(monthly|weekly|yearly)$')
+    period_type: str = Field("monthly", pattern=r'^(monthly|weekly|yearly)$')
     start_date: datetime
     end_date: datetime
     alert_threshold: int = Field(80, ge=0, le=100)

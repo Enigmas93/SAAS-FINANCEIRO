@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from datetime import datetime, timedelta
 import pandas as pd
 import io
@@ -291,7 +291,7 @@ async def process_bank_extract(
         last_import_date=datetime.now()
     )
 
-def auto_categorize_transaction(description: str) -> tuple[str, float]:
+def auto_categorize_transaction(description: str) -> Tuple[str, float]:
     """Categoriza automaticamente uma transação baseada na descrição"""
     
     description_lower = description.lower()

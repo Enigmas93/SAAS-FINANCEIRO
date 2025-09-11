@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from database import get_db
 from models import User, Company, Subscription, SubscriptionPlan, SubscriptionStatus, UserRole
-from schemas import UserLogin, UserRegister, Token, User as UserSchema
+from schemas import UserLogin, UserRegister, Token, LoginResponse, User as UserSchema
 from auth import (
     authenticate_user, 
     create_access_token, 
@@ -70,7 +70,7 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
         "trial_end": trial_end
     }
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=LoginResponse)
 def login(user_credentials: UserLogin, db: Session = Depends(get_db)):
     """Autentica usuário e retorna tokens JWT"""
     
@@ -89,7 +89,8 @@ def login(user_credentials: UserLogin, db: Session = Depends(get_db)):
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "user": user
     }
 
 @router.post("/refresh", response_model=Token)
